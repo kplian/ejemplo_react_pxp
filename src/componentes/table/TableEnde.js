@@ -42,6 +42,7 @@ const TableEnde = ({config}) => {
   const [open, setOpen] = useState(false);
   const [typeModalForm, setTypeModalForm] = useState('add');
 
+  const [idStoreSelected, setIdStoreSelected] = useState();
 
   //crear states para usar en form
   console.log('keys',Object.keys(config.columns))
@@ -64,11 +65,16 @@ const TableEnde = ({config}) => {
 
   const handleAdd = () => {
     console.log(stateForm)
+    console.log('idStoreSelected',idStoreSelected)
     console.log(Object.entries(stateForm))
     const dataToSend = Object.entries(stateForm).reduce((prev, [name, values]) => ({
       ...prev,
       [name] : values.value
     }), {});
+    if(typeModalForm === 'edit') {
+      dataToSend[config.idStore] = idStoreSelected;
+    }
+
 
 
     PxpClient.doRequest({
@@ -103,6 +109,7 @@ const TableEnde = ({config}) => {
         console.log('prop',prop)
         stateForm[prop].setValue(row[prop]);
       }
+      setIdStoreSelected(row[config.idStore])
     }
 
   }

@@ -26,7 +26,7 @@ const Producto = () => {
         label: 'Categoria'
       }
     },
-    idStore: 'id_categoria',
+    idStore: 'id_producto',
     getDataTable: {
       url: 'tienda/Producto/listarProducto',
       params: {
