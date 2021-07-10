@@ -26,7 +26,9 @@ const Categoria = () => {
       },
       load: true,
       method: 'POST',
-    }
+    },
+    urlAdd: 'tienda/Categoria/insertarCategoria',
+    urlDelete: 'tienda/Categoria/eliminarCategoria',
   };
 
 

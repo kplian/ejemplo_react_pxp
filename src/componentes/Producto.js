@@ -18,6 +18,12 @@ const Producto = () => {
       },
       precio: {
         label: 'Precio'
+      },
+      id_marca: {
+        label: 'Marca'
+      },
+      id_categoria: {
+        label: 'Categoria'
       }
     },
     idStore: 'id_categoria',
@@ -31,7 +37,9 @@ const Producto = () => {
       },
       load: true,
       method: 'POST',
-    }
+    },
+    urlAdd: 'tienda/Producto/insertarProducto',
+    urlDelete: 'tienda/Producto/eliminarProducto',
   };
 
 

@@ -6,7 +6,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import PxpClient from "pxp-client";
 
 const ITEM_HEIGHT = 48;
-const Actions = ({idStore, row, urlDelete, idStoreDesc }) => {
+const Actions = ({idStore, row, urlDelete, idStoreDesc, openModalNew }) => {
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -72,7 +72,7 @@ const Actions = ({idStore, row, urlDelete, idStoreDesc }) => {
         <MenuItem key={`deteleRow${idStore}`} onClick={handleDelete}>
           Delete
         </MenuItem>
-        <MenuItem key={`editRow${idStore}`} onClick={editDelete}>
+        <MenuItem key={`editRow${idStore}`} onClick={()=>openModalNew('edit', row)}>
           Edit
         </MenuItem>
       </Menu>

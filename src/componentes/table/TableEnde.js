@@ -40,6 +40,7 @@ const TableEnde = ({config}) => {
   const {response, error} = useFetch(config.getDataTable.url, config.getDataTable);
 
   const [open, setOpen] = useState(false);
+  const [typeModalForm, setTypeModalForm] = useState('add');
 
 
   //crear states para usar en form
@@ -70,9 +71,16 @@ const TableEnde = ({config}) => {
     }), {});
 
 
+    PxpClient.doRequest({
+      url: config.urlAdd,
+      params: dataToSend,
+    }).then((resp) => {
+      console.log('resp',resp)
+      setOpen(false)
+    }).catch((err) => {
+      console.log('err',err)
+    })
 
-
-    console.log('dataToSend',dataToSend)
   }
 
 
@@ -86,8 +94,17 @@ const TableEnde = ({config}) => {
   }, [data])
 
 
-  const openModalNew = () => {
+  const openModalNew = (type, row) => {
+    setTypeModalForm(type)
     setOpen(true)
+    console.log('row',row)
+    if(type === 'edit') {
+      for(const prop of Object.keys(config.columns)) {
+        console.log('prop',prop)
+        stateForm[prop].setValue(row[prop]);
+      }
+    }
+
   }
   const handleClose = () => {
     setOpen(false)
@@ -98,7 +115,7 @@ const TableEnde = ({config}) => {
   return (
     <>
       <Paper className={classes.root}>
-        <Button variant="contained" color="primary" onClick={openModalNew}>
+        <Button variant="contained" color="primary" onClick={() => openModalNew('add')}>
           Agregar
         </Button>
         <TableContainer className={classes.container}>
@@ -133,7 +150,7 @@ const TableEnde = ({config}) => {
                       })
                     }
                     <TableCell>
-                      <Actions idStore={row[config.idStore]} row={row} urlDelete={config.urlDelete} idStoreDesc={config.idStore}/>
+                      <Actions idStore={row[config.idStore]} row={row} urlDelete={config.urlDelete} idStoreDesc={config.idStore} openModalNew={openModalNew}/>
                     </TableCell>
 
                   </TableRow>
@@ -146,10 +163,10 @@ const TableEnde = ({config}) => {
       </Paper>
 
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-        <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
+        <DialogTitle id="form-dialog-title">{typeModalForm}</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            add
+            {typeModalForm}
           </DialogContentText>
           {
             Object.keys(config.columns).map((nameKey) => (
