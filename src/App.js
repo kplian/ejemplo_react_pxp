@@ -22,10 +22,11 @@ PxpClient.init(
 );
 
 PxpClient.onAuthStateChanged((user)=> {
-  console.log('onAuthStateChanged callback', user)
+  if(!user) {
+    PxpClient.login('admin','admin');
+  }
 })
 
-PxpClient.login('admin','admin');
 
 
 
